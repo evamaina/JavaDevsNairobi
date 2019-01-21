@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@android:color/holo_blue_light"
+    app:cardBackgroundColor="@android:color/darker_gray"
     app:cardElevation="70dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="20dp">
@@ -36,12 +36,12 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/followers"
+                android:id="@+id/repositories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="20sp"
-                tools:text="followers" />
+                tools:text="repositories" />
         </LinearLayout>
 
     </LinearLayout>
