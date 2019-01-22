@@ -1,9 +1,14 @@
 package com.example.javadevsnairobi;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toolbar;
 
 import com.example.javadevsnairobi.models.RecyclerAdapter;
 import com.example.javadevsnairobi.models.User;
@@ -17,6 +22,7 @@ public class MainActivity extends Activity {
     RecyclerAdapter adapter;
     List<User> users;
     RecyclerView.LayoutManager manager;
+
 
 
     @Override
@@ -73,6 +79,8 @@ public class MainActivity extends Activity {
         recyclerView.setLayoutManager(manager);
         adapter = new RecyclerAdapter(users, this);
         recyclerView.setAdapter(adapter);
+
     }
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.javadevsnairobi.models;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.javadevsnairobi.DetailActivity;
 import com.example.javadevsnairobi.R;
 
 import java.util.List;
@@ -38,23 +40,51 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
         viewHolder.image.setImageResource(R.drawable.avatar);
         viewHolder.name.setText(user.getName());
         viewHolder.repositories.setText(new Integer(user.getRepositories()).toString()+" repositories");
+        viewHolder.setListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              context.startActivity(new Intent(context, DetailActivity.class));
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return users.size();
     }
+
 }
 
-class  ViewHolder extends RecyclerView.ViewHolder {
+class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     ImageView image;
     TextView name, repositories;
+    View.OnClickListener listener;
+
+    public ViewHolder(@NonNull View itemView, View.OnClickListener listener) {
+        super(itemView);
+        this.listener = listener;
+    }
+
+    public View.OnClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(View.OnClickListener listener) {
+        this.listener = listener;
+    }
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
         image = itemView.findViewById(R.id.user_image);
         name = itemView.findViewById(R.id.username);
         repositories = itemView.findViewById(R.id.repositories);
+        itemView.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        listener.onClick(v);
 
     }
 }
