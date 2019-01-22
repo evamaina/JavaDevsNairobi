@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/user_detail"
+    tools:context=".DetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/toolbar_detail"
+        app:title="User details"
+        app:titleTextColor="#ffff"
+        android:background="@color/colorPrimary"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/avatar"
+        android:src="@drawable/avatar"
+        android:layout_below="@id/toolbar_detail"
+        android:scaleType="centerCrop" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="evamaina"
+        android:id="@+id/username"
+        android:textColor="#ffff"
+        android:layout_marginTop="20dp"
+        android:textSize="40sp"
+        android:layout_alignBottom="@id/avatar"
+        android:layout_marginLeft="10dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/repos"
+        android:text=" 25 repositories"
+        android:textSize="25sp"
+        android:textColor="#808080"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/username" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/follow"
+        android:text=" 12 followers"
+        android:textSize="25sp"
+        android:textColor="#808080"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/repos" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/org"
+        android:text="Andela"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/follow"
+        android:textSize="25sp"
+        android:textColor="#808080"
+        android:layout_marginLeft="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="https://github.com/evamaina"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/org"
+        android:textSize="20sp"
+        android:textColor="#4cd2ff"
+        android:layout_marginLeft="10dp"/>
+
+
+
+
+
+
+
+
+</RelativeLayout>
