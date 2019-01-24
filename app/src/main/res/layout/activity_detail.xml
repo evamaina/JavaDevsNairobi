@@ -12,9 +12,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/toolbar_detail"
-        app:title="User details"
         app:titleTextColor="#ffff"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        tools:ignore="ExtraText">
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -74,12 +80,5 @@
         android:textSize="20sp"
         android:textColor="#4cd2ff"
         android:layout_marginLeft="10dp"/>
-
-
-
-
-
-
-
 
 </RelativeLayout>
