@@ -8,23 +8,23 @@ public class GithubUsersResponse {
 
     @SerializedName("")
 
-    ArrayList<GithubUser> GithubUsers;
+    ArrayList<GithubUser> users;
 
     @SerializedName("total_count")
 
     private String total_count;
 
-    public GithubUsersResponse(ArrayList<GithubUser> GithubUsers, String total_count) {
-        this.GithubUsers = GithubUsers;
+    public GithubUsersResponse(ArrayList<GithubUser> users, String total_count) {
+        this.users = users;
         this.total_count = total_count;
     }
 
     public ArrayList<GithubUser> getGithubUsers() {
-        return GithubUsers;
+        return users;
     }
 
-    public void setGithubUsers(ArrayList<GithubUser> GithubUsers) {
-        this.GithubUsers = GithubUsers;
+    public void setGithubUsers(ArrayList<GithubUser> users) {
+        this.users = users;
     }
 
     public String getTotal_count() {
