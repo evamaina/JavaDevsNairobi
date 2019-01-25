@@ -10,18 +10,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toolbar;
 
+import com.example.javadevsnairobi.models.GithubUser;
 import com.example.javadevsnairobi.models.RecyclerAdapter;
 import com.example.javadevsnairobi.models.User;
+import com.example.javadevsnairobi.presenter.GithubPresenter;
+import com.example.javadevsnairobi.view.UserListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements UserListView {
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
     List<User> users;
     RecyclerView.LayoutManager manager;
+    GithubPresenter githubPresenter;
 
 
 
@@ -74,6 +78,10 @@ public class MainActivity extends Activity {
         users.add(user5);
         users.add(user6);
         users.add(user7);
+
+        GithubPresenter githubPresenter = new GithubPresenter(this);
+        githubPresenter.getGithubUsers();
+
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
@@ -82,5 +90,10 @@ public class MainActivity extends Activity {
 
     }
 
+
+    @Override
+    public void usersListReady(List<GithubUser> githubUsers) {
+
+    }
 
 }
