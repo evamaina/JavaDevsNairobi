@@ -3,28 +3,32 @@ package com.example.javadevsnairobi.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GithubUsersResponse {
 
-    @SerializedName("item")
+    public GithubUsersResponse() {
+    }
 
-    ArrayList<GithubUser> users;
+    @SerializedName("items")
+
+    List<GithubUser> githubUsers;
 
     @SerializedName("total_count")
 
     private String total_count;
 
     public GithubUsersResponse(ArrayList<GithubUser> users, String total_count) {
-        this.users = users;
+        this.githubUsers = users;
         this.total_count = total_count;
     }
 
-    public ArrayList<GithubUser> getGithubUsers() {
-        return users;
+    public List<GithubUser> getGithubUsers() {
+        return githubUsers;
     }
 
     public void setGithubUsers(ArrayList<GithubUser> users) {
-        this.users = users;
+        this.githubUsers = users;
     }
 
     public String getTotal_count() {
