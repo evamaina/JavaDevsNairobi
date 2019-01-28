@@ -4,9 +4,12 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.widget.Button;
 import android.widget.Toolbar;
 
@@ -26,6 +29,8 @@ public class MainActivity extends Activity implements UserListView {
     List<User> users;
     RecyclerView.LayoutManager manager;
     GithubPresenter githubPresenter;
+    Parcelable githubUsersList;
+    public static final String USER_LIST_KEY = "users_list";
 
 
 
@@ -95,5 +100,28 @@ public class MainActivity extends Activity implements UserListView {
     public void usersListReady(List<GithubUser> githubUsers) {
 
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        githubUsersList = manager.onSaveInstanceState();
+        outState.putParcelable(USER_LIST_KEY, githubUsersList);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null)
+            githubUsersList = savedInstanceState.getParcelable(USER_LIST_KEY);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (githubUsersList != null) {
+            manager.onRestoreInstanceState(githubUsersList);
+        }
+    }
+
 
 }
