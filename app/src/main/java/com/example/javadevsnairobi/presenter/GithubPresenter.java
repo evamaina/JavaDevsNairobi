@@ -1,5 +1,6 @@
 package com.example.javadevsnairobi.presenter;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.javadevsnairobi.models.GithubUser;
@@ -8,6 +9,7 @@ import com.example.javadevsnairobi.service.GithubService;
 import com.example.javadevsnairobi.view.UserListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,13 +29,12 @@ public class GithubPresenter {
     public void getGithubUsers() {
         githubService
                 .getGithubAPI()
-                .users()
+                .get_users()
                 .enqueue(new Callback<GithubUsersResponse>() {
+                    @SuppressLint("LongLogTag")
                     @Override
                     public void onResponse(Call<GithubUsersResponse> call, Response<GithubUsersResponse> response) {
-                        if (response.isSuccessful()) {
-                            ArrayList<GithubUser> users = response.body().getGithubUsers();
-                        }
+                        userListView.usersListReady(response.body().getGithubUsers());
                     }
 
                     @Override

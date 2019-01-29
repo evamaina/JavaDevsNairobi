@@ -1,4 +1,4 @@
-package com.example.javadevsnairobi.models;
+package com.example.javadevsnairobi.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,17 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.bumptech.glide.Glide;
 import com.example.javadevsnairobi.DetailActivity;
 import com.example.javadevsnairobi.R;
+import com.example.javadevsnairobi.models.GithubUser;
 
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+public class GithubAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-    List<User> users;
+    List<GithubUser> users;
     Context context;
 
-    public RecyclerAdapter(List<User> users, Context context) {
+    public GithubAdapter(List<GithubUser> users, Context context) {
         this.users = users;
         this.context = context;
     }
@@ -35,11 +38,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        User user = users.get(i);
+        GithubUser user = users.get(i);
 
-        viewHolder.image.setImageResource(R.drawable.avatar);
-        viewHolder.name.setText(user.getName());
-        viewHolder.repositories.setText(new Integer(user.getRepositories()).toString()+" repositories");
+        Glide.with(context).load(user.getProfilePic()).into(viewHolder.image);
+        viewHolder.name.setText(user.getUsername());
+        viewHolder.repositories.setText((user.getRepositories() +" repositories"));
         viewHolder.setListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +53,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return users != null ? users.size() : 0;
     }
 
 }

@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 public interface GithubAPI {
 
     @GET("search/users?q=language:java+location:nairobi")
-    Call<GithubUsersResponse> users();
+    Call<GithubUsersResponse> get_users();
 
     @GET("users/{username}")
     Call<GithubUser> getUser(@Path("username") String username);
