@@ -13,8 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.javadevsnairobi.DetailActivity;
+import com.example.javadevsnairobi.MainActivity;
 import com.example.javadevsnairobi.R;
 import com.example.javadevsnairobi.models.GithubUser;
+import com.example.javadevsnairobi.utils.Constants;
 
 import java.util.List;
 
@@ -38,15 +40,19 @@ public class GithubAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        GithubUser user = users.get(i);
+        final GithubUser user = users.get(i);
 
         Glide.with(context).load(user.getProfilePic()).into(viewHolder.image);
         viewHolder.name.setText(user.getUsername());
-        viewHolder.repositories.setText((user.getRepositories() +" repositories"));
+        viewHolder.repositories.setText((user.getRepos_url() +" repositories"));
         viewHolder.setListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              context.startActivity(new Intent(context, DetailActivity.class));
+             Intent intent =  new Intent(context, DetailActivity.class);
+             intent.putExtra(Constants.USERNAME, user.getUsername());
+             intent.putExtra(Constants.URL, user.getUrl());
+             intent.putExtra(Constants.PROFILEPIC, user.getProfilePic());
+             context.startActivity(intent);
             }
         });
     }

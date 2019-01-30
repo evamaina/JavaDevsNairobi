@@ -9,7 +9,9 @@ import android.widget.Toast;
 
 import com.example.javadevsnairobi.models.GithubUser;
 import com.example.javadevsnairobi.adapter.GithubAdapter;
+import com.example.javadevsnairobi.models.User;
 import com.example.javadevsnairobi.presenter.GithubPresenter;
+import com.example.javadevsnairobi.utils.Constants;
 import com.example.javadevsnairobi.view.UserListView;
 
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ public class MainActivity extends Activity implements UserListView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         manager = new   LinearLayoutManager(this);
 
         GithubPresenter githubPresenter = new GithubPresenter(this);
@@ -44,7 +45,6 @@ public class MainActivity extends Activity implements UserListView {
 
 
         if (savedInstanceState != null) {
-            users = new ArrayList<>();
             users = savedInstanceState.getParcelableArrayList(USER_LIST_KEY);
             usersListReady(users);
         } else {
@@ -61,6 +61,12 @@ public class MainActivity extends Activity implements UserListView {
         adapter.notifyDataSetChanged();
 
     }
+
+    @Override
+    public void userDetails(GithubUser user) {
+
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

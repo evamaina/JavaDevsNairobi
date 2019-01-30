@@ -15,18 +15,32 @@ public class GithubUser implements Parcelable {
     @SerializedName("url")
     private String url;
 
-    @SerializedName("followers_url")
+    @SerializedName("followers")
     private String followers;
 
-    @SerializedName("repos_url")
-    private String repositories;
+    @SerializedName("public_repos")
+    private String public_repos;
 
-    public GithubUser(String username, String profilePic, String url, String followers, String repositories) {
+    @SerializedName("repos_url")
+    private String repos_url;
+
+    @SerializedName("company")
+    private String company;
+
+    @SerializedName("location")
+    private String location;
+
+
+    public GithubUser(String username, String profilePic, String url, String followers, String public_repos, String company, String repos_url, String location) {
         this.username = username;
         this.profilePic = profilePic;
         this.url = url;
         this.followers = followers;
-        this.repositories = repositories;
+        this.public_repos = public_repos;
+        this.company = company;
+        this.repos_url = repos_url;
+        this.location = location;
+
     }
 
     public GithubUser() {
@@ -37,7 +51,9 @@ public class GithubUser implements Parcelable {
         profilePic = in.readString();
         url = in.readString();
         followers = in.readString();
-        repositories = in.readString();
+        public_repos = in.readString();
+        company = in.readString();
+        location = in.readString();
     }
 
     public static final Creator<GithubUser> CREATOR = new Creator<GithubUser>() {
@@ -84,12 +100,36 @@ public class GithubUser implements Parcelable {
         this.followers = followers;
     }
 
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company =company;
+    }
+
     public String getRepositories() {
-        return repositories;
+        return public_repos;
     }
 
     public void setRepositories(String repositories) {
-        this.repositories = repositories;
+        this.public_repos = public_repos;
+    }
+
+    public String getRepos_url() {
+        return repos_url;
+    }
+
+    public void setRepos_url(String repos_url) {
+        this.repos_url = repos_url;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override
@@ -103,7 +143,8 @@ public class GithubUser implements Parcelable {
         dest.writeString(profilePic);
         dest.writeString(url);
         dest.writeString(followers);
-        dest.writeString(repositories);
+        dest.writeString(public_repos);
+        dest.writeString(company);
     }
 }
 
