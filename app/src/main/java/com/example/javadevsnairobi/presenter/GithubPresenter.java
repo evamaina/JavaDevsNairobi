@@ -1,15 +1,11 @@
 package com.example.javadevsnairobi.presenter;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.example.javadevsnairobi.models.GithubUser;
 import com.example.javadevsnairobi.models.GithubUsersResponse;
 import com.example.javadevsnairobi.service.GithubService;
 import com.example.javadevsnairobi.view.UserListView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,4 +43,20 @@ public class GithubPresenter {
                     }
                 });
     }
+
+
+    public void getUserDetails(String username){
+        githubService.getGithubAPI().getUser(username).enqueue(new Callback<GithubUser>() {
+            @Override
+            public void onResponse(Call<GithubUser> call, Response<GithubUser> response) {
+                userListView.userDetails(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<GithubUser> call, Throwable t) {
+
+            }
+        });
+    }
+
 }
