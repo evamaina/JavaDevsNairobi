@@ -44,7 +44,7 @@ public class GithubAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         Glide.with(context).load(user.getProfilePic()).into(viewHolder.image);
         viewHolder.name.setText(user.getUsername());
-        viewHolder.repositories.setText((user.getRepos_url() +" repositories"));
+//        viewHolder.repositories.setText((user.getRepos_url() +" repositories"));
         viewHolder.setListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

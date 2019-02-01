@@ -1,9 +1,12 @@
 package com.example.javadevsnairobi;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v7.widget.LinearLayoutManager;
+//import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
@@ -12,20 +15,23 @@ import com.example.javadevsnairobi.adapter.GithubAdapter;
 import com.example.javadevsnairobi.models.User;
 import com.example.javadevsnairobi.presenter.GithubPresenter;
 import com.example.javadevsnairobi.utils.Constants;
+import com.example.javadevsnairobi.view.LoadListener;
 import com.example.javadevsnairobi.view.UserListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity implements UserListView {
+public class MainActivity extends Activity implements UserListView, SwipeRefreshLayout.OnRefreshListener, LoadListener {
     RecyclerView recyclerView;
     GithubAdapter adapter;
     List<GithubUser> users;
-    RecyclerView.LayoutManager manager;
+    GridLayoutManager gridLayoutManager;
     GithubPresenter githubPresenter;
     Parcelable githubUsersList;
     public static final String USER_LIST_KEY = "users_list";
+    SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog dialog;
 
 
 
@@ -33,14 +39,21 @@ public class MainActivity extends Activity implements UserListView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        manager = new   LinearLayoutManager(this);
+        gridLayoutManager = new GridLayoutManager(this, 2);
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
 
-        GithubPresenter githubPresenter = new GithubPresenter(this);
-        githubPresenter.getGithubUsers();
+       fetchUsers();
 
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("loading...");
+        dialog.show();
+
 
 
 
@@ -48,7 +61,7 @@ public class MainActivity extends Activity implements UserListView {
             users = savedInstanceState.getParcelableArrayList(USER_LIST_KEY);
             usersListReady(users);
         } else {
-            githubPresenter.getGithubUsers();
+            fetchUsers();
         }
 
     }
@@ -57,6 +70,7 @@ public class MainActivity extends Activity implements UserListView {
     @Override
     public void usersListReady(List<GithubUser> githubUsers) {
         adapter = new GithubAdapter(githubUsers, this);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -65,13 +79,14 @@ public class MainActivity extends Activity implements UserListView {
     @Override
     public void userDetails(GithubUser user) {
 
+
     }
 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        githubUsersList = manager.onSaveInstanceState();
+        githubUsersList = gridLayoutManager.onSaveInstanceState();
         outState.putParcelable(USER_LIST_KEY, githubUsersList);
     }
 
@@ -86,9 +101,28 @@ public class MainActivity extends Activity implements UserListView {
     protected void onResume() {
         super.onResume();
         if (githubUsersList != null) {
-            manager.onRestoreInstanceState(githubUsersList);
+            gridLayoutManager.onRestoreInstanceState(githubUsersList);
         }
     }
 
+    @Override
+    public void onRefresh() {
+        fetchUsers();
+    }
 
+    private void fetchUsers() {
+        GithubPresenter githubPresenter = new GithubPresenter(this, this);
+        githubPresenter.getGithubUsers();
+    }
+
+
+    @Override
+    public void isLoading(boolean hasLoaded) {
+        if (hasLoaded && swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        else if(hasLoaded && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
 }

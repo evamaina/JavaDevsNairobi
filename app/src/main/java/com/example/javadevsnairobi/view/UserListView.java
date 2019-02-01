@@ -9,4 +9,5 @@ public interface UserListView {
     void usersListReady(List<GithubUser> githubUsers);
 
     void userDetails(GithubUser user);
+
 }

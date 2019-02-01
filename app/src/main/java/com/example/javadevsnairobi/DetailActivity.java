@@ -1,5 +1,6 @@
 package com.example.javadevsnairobi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.example.javadevsnairobi.models.GithubUsersResponse;
 import com.example.javadevsnairobi.presenter.GithubPresenter;
 import com.example.javadevsnairobi.service.GithubService;
 import com.example.javadevsnairobi.utils.Constants;
+import com.example.javadevsnairobi.view.LoadListener;
 import com.example.javadevsnairobi.view.UserListView;
 
 import java.sql.Struct;
@@ -30,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailActivity extends AppCompatActivity implements UserListView {
+public class DetailActivity extends AppCompatActivity implements UserListView, LoadListener {
     String username;
     String url;
     String profile_pic;
@@ -54,7 +57,7 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
         getSupportActionBar().setTitle("User detail");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        presenter = new GithubPresenter(this);
+        presenter = new GithubPresenter(this, this);
         followersTextview = findViewById(R.id.follow);
         organizationTextview = findViewById(R.id.org);
         repoTextview = findViewById(R.id.repos);
@@ -133,4 +136,8 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
     }
 
 
+    @Override
+    public void isLoading(boolean hasLoaded) {
+
+    }
 }
