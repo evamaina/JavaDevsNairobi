@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import com.example.javadevsnairobi.models.GithubUser;
 import com.example.javadevsnairobi.models.GithubUsersResponse;
 import com.example.javadevsnairobi.service.GithubService;
+import com.example.javadevsnairobi.view.LoadListener;
 import com.example.javadevsnairobi.view.UserListView;
 
 import retrofit2.Call;
@@ -14,9 +15,11 @@ import retrofit2.Response;
 public class GithubPresenter {
     private GithubService githubService;
     private UserListView userListView;
+    LoadListener loadListener;
 
-    public GithubPresenter(UserListView userListView) {
+    public GithubPresenter(UserListView userListView, LoadListener loadListener) {
         this.userListView = userListView;
+        this.loadListener = loadListener;
         if (this.githubService == null) {
             this.githubService = new GithubService();
         }
@@ -31,6 +34,7 @@ public class GithubPresenter {
                     @Override
                     public void onResponse(Call<GithubUsersResponse> call, Response<GithubUsersResponse> response) {
                         userListView.usersListReady(response.body().getGithubUsers());
+                        loadListener.isLoading(true);
                     }
 
                     @Override
@@ -50,6 +54,7 @@ public class GithubPresenter {
             @Override
             public void onResponse(Call<GithubUser> call, Response<GithubUser> response) {
                 userListView.userDetails(response.body());
+                loadListener.isLoading(true);
             }
 
             @Override
