@@ -41,6 +41,7 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
     TextView locationTextview;
     TextView usenameTextview;
     TextView urlTextview;
+    ImageView shareImageview;
 
 
 
@@ -60,6 +61,8 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
         locationTextview = findViewById(R.id.location);
         urlTextview = findViewById(R.id.url);
         usenameTextview = findViewById(R.id.username);
+
+
         getIntent();
         if (getIntent().getExtras() != null) {
             username = getIntent().getStringExtra(Constants.USERNAME);
@@ -70,6 +73,7 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
             Glide.with(this).load(profile_pic).into(userImageView);
 
 
+
         }
 
 
@@ -78,14 +82,13 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
         urlTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/"+username));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/" + username));
                 startActivity(browserIntent);
             }
         });
-
-
-
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,6 +104,12 @@ public class DetailActivity extends AppCompatActivity implements UserListView {
                 // app icon in action bar clicked; goto parent activity.
                 this.finish();
                 return true;
+            case (R.id.share):
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Checkout this awesome developer @" + username + ", " + url + ".");
+                startActivity(Intent.createChooser(intent, "Share user profile via..."));
             default:
                 return super.onOptionsItemSelected(item);
         }
