@@ -1,13 +1,18 @@
 package com.example.javadevsnairobi;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 //import android.support.v7.widget.LinearLayoutManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.javadevsnairobi.models.GithubUser;
@@ -15,6 +20,7 @@ import com.example.javadevsnairobi.adapter.GithubAdapter;
 import com.example.javadevsnairobi.models.User;
 import com.example.javadevsnairobi.presenter.GithubPresenter;
 import com.example.javadevsnairobi.utils.Constants;
+import com.example.javadevsnairobi.utils.NetworkUtility;
 import com.example.javadevsnairobi.view.LoadListener;
 import com.example.javadevsnairobi.view.UserListView;
 
@@ -42,7 +48,10 @@ public class MainActivity extends Activity implements UserListView, SwipeRefresh
         gridLayoutManager = new GridLayoutManager(this, 2);
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
 
-       fetchUsers();
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("loading...");
+        dialog.show();
 
         recyclerView = findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -50,9 +59,6 @@ public class MainActivity extends Activity implements UserListView, SwipeRefresh
 
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(this);
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("loading...");
-        dialog.show();
 
 
 
@@ -111,6 +117,20 @@ public class MainActivity extends Activity implements UserListView, SwipeRefresh
     }
 
     private void fetchUsers() {
+        if(!NetworkUtility.isConnected(this)){
+            dialog.dismiss();
+            Snackbar.make(
+                    findViewById(R.id.snackbar_action),
+                    "Failed to load !",
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction("TAP TO RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            fetchUsers();
+                        }
+                    }).setActionTextColor(Color.WHITE)
+                    .show();
+        }
         GithubPresenter githubPresenter = new GithubPresenter(this, this);
         githubPresenter.getGithubUsers();
     }
