@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.javadevsnairobi.models.GithubUser;
 import com.example.javadevsnairobi.models.GithubUsersResponse;
 import com.example.javadevsnairobi.presenter.GithubPresenter;
@@ -25,6 +24,7 @@ import com.example.javadevsnairobi.service.GithubService;
 import com.example.javadevsnairobi.utils.Constants;
 import com.example.javadevsnairobi.view.LoadListener;
 import com.example.javadevsnairobi.view.UserListView;
+import com.squareup.picasso.Picasso;
 
 import java.sql.Struct;
 import java.util.List;
@@ -73,7 +73,7 @@ public class DetailActivity extends AppCompatActivity implements UserListView, L
             url = getIntent().getStringExtra(Constants.URL);
             profile_pic = getIntent().getStringExtra(Constants.PROFILEPIC);
             ImageView userImageView = findViewById(R.id.avatar);
-            Glide.with(this).load(profile_pic).into(userImageView);
+            Picasso.get().load(profile_pic).into(userImageView);
 
 
 
