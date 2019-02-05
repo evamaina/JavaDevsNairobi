@@ -63,7 +63,7 @@ public class DetailActivity extends AppCompatActivity implements UserListView, L
         repoTextview = findViewById(R.id.repos);
         locationTextview = findViewById(R.id.location);
         urlTextview = findViewById(R.id.url);
-        usenameTextview = findViewById(R.id.username);
+        usenameTextview = findViewById(R.id.username_detail);
 
 
         getIntent();
