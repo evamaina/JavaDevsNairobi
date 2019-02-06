@@ -14,7 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
-
+import android.support.test.espresso.idling.CountingIdlingResource;
 import com.example.javadevsnairobi.models.GithubUser;
 import com.example.javadevsnairobi.adapter.GithubAdapter;
 import com.example.javadevsnairobi.models.User;
@@ -38,6 +38,7 @@ public class MainActivity extends Activity implements UserListView, SwipeRefresh
     public static final String USER_LIST_KEY = "users_list";
     SwipeRefreshLayout swipeRefreshLayout;
     ProgressDialog dialog;
+    CountingIdlingResource mIdlingRes = new CountingIdlingResource("name");
 
 
 
@@ -67,9 +68,13 @@ public class MainActivity extends Activity implements UserListView, SwipeRefresh
             users = savedInstanceState.getParcelableArrayList(USER_LIST_KEY);
             usersListReady(users);
         } else {
+            mIdlingRes.increment();
             fetchUsers();
         }
 
+    }
+    public CountingIdlingResource getIdlingResourceInTest() {
+        return mIdlingRes;
     }
 
 
@@ -142,6 +147,7 @@ public class MainActivity extends Activity implements UserListView, SwipeRefresh
             swipeRefreshLayout.setRefreshing(false);
         }
         else if(hasLoaded && dialog.isShowing()) {
+            mIdlingRes.decrement();
             dialog.dismiss();
         }
     }
