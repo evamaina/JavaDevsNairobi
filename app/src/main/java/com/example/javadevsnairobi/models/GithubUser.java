@@ -46,6 +46,9 @@ public class GithubUser implements Parcelable {
     public GithubUser() {
     }
 
+    public GithubUser(String username, String profilePic, String url, String followers, String repos) {
+    }
+
     private GithubUser(Parcel in) {
         username = in.readString();
         profilePic = in.readString();
@@ -72,7 +75,7 @@ public class GithubUser implements Parcelable {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -112,7 +115,7 @@ public class GithubUser implements Parcelable {
         return public_repos;
     }
 
-    public void setRepositories(String repositories) {
+    public void setRepositories(String public_repos) {
         this.public_repos = public_repos;
     }
 
