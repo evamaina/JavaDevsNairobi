@@ -37,7 +37,7 @@ public class MainActivityTest {
     @Before
     public void setUp() {
         try {
-            Thread.sleep(4000);
+            Thread.sleep(6000);
         }catch (Exception e) {
             Log.e(TAG, "Test setUp: "+e.getMessage());
         }
